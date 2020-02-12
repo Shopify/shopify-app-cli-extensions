@@ -40,5 +40,6 @@ module ShopifyCli
     end
 
     autoload :CreateApp, 'shopify-cli/forms/create_app'
+    autoload :CreateExtension, 'shopify-cli/forms/create_extension'
   end
 end

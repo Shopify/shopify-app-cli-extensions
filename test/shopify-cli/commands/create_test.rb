@@ -13,6 +13,12 @@ module ShopifyCli
           .with(['new-app'], 'project')
         run_cmd('create project new-app')
       end
+
+      def test_with_extension_calls_extension
+        Create::Extension.any_instance.expects(:call)
+          .with(['new-extension'], 'extension')
+        run_cmd('create extension new-extension')
+      end
     end
   end
 end
