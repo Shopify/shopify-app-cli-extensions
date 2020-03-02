@@ -4,6 +4,7 @@ module ShopifyCli
   module Commands
     class Create < ShopifyCli::Command
       subcommand :Project, 'project', 'shopify-cli/commands/create/project'
+      subcommand :Extension, 'extension', 'shopify-cli/commands/create/extension'
 
       def call(*)
         @ctx.puts(self.class.help)
