@@ -5,7 +5,7 @@ module ShopifyCli
   module Forms
     class CreateExtension < Form
       positional_arguments :name
-      flag_arguments :type
+      flag_arguments :type, :app
 
       ExtensionType = Struct.new(:identifier, :description, keyword_init: true) do
         def ==(extensionType)
@@ -25,6 +25,7 @@ module ShopifyCli
 
       def ask
         self.type = ask_type
+        self.app = ask_app
       end
 
       private
@@ -36,6 +37,20 @@ module ShopifyCli
           EXTENSION_TYPES.each do |type|
             handler.option(type.description) { type.identifier }
           end
+        end
+      end
+
+      def ask_app
+        resp = Helpers::Organizations.fetch_with_app(@ctx)
+        return @ctx.puts('There is no registered app. Create an app and try again.') if resp.empty?
+        # the following line of code will be expanded to validate the provided app will be done in the next iteration.
+        return app if !app.nil?
+        CLI::UI::Prompt.ask('Which app will you like to associate with the extension?') do |handler|
+          resp.each do |org|
+            org['apps'].each do |app|
+              handler.option(app['title'] + " by #{org['businessName'].to_s}") { app }
+            end
+          end 
         end
       end
     end
