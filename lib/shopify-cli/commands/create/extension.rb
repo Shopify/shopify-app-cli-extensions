@@ -6,28 +6,21 @@ module ShopifyCli
     class Create
       class Extension < ShopifyCli::SubCommand
         options do |parser, flags|
-          parser.on('--type=TYPE') { |type| flags[:type] = type.downcase }
+          parser.on('--type=TYPE') { |type| flags[:type] = type.downcase  }
+          parser.on('--api-key=KEY') { |key| flags[:api_key] = key.downcase }
         end
 
         def call(args, _name)
-          form = Forms::CreateExtension.ask(@ctx, args, options.flags)
-          return @ctx.puts(self.class.help) if form.nil?          
-          return @ctx.puts(self.class.appHelp) if form.app.nil? 
+          form = Forms::CreateExtension.ask(@ctx, args, options.flags)       
+          return @ctx.puts(self.class.help) if form.nil?
           build(form.name, @ctx)
-          write_Envfile(form)         
+          write_envfile(form)         
         end
 
         def self.help
           <<~HELP
             Create a new app extension.
               Usage: {{command:#{ShopifyCli::TOOL_NAME} create extension <name>}}
-          HELP
-        end
-
-        def self.appHelp
-          <<~HELP
-            Create a new app.
-              Visit https://github.com/Shopify/shopify-app-cli/blob/master/README.md#create-a-new-app-project to create an app.
           HELP
         end
 
@@ -48,12 +41,11 @@ module ShopifyCli
           ShopifyCli::Tasks::JsDeps.call(ctx)
         end        
 
-        def write_Envfile(form)
+        def write_envfile(form)         
           Helpers::EnvFile.new(
             api_key: form.app["apiKey"],
-            secret: form.app["apiSecretKeys"].first["secret"],
-            extra: {"PARENT_APP": form.app["id"]}
-          ).write(@ctx)
+            secret: form.app["apiSecretKeys"].first["secret"]
+          ).write(@ctx)          
         end
       end
     end
