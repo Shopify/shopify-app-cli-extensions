@@ -18,7 +18,6 @@ module Extension
         form = ask
         assert_equal form.title, 'test-extension'
         assert_equal form.type, 'product-details'
-
       end
 
       def test_accepts_product_details_as_type
