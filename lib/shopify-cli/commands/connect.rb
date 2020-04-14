@@ -4,7 +4,7 @@ module ShopifyCli
   module Commands
     class Connect < ShopifyCli::Command
       def call(*)
-        if Project.at(Dir.pwd)
+        if Project.current
           @ctx.puts "{{yellow:! Don't use}} {{cyan:connect}} {{yellow:for production apps}}"
           org = fetch_org
           id = org['id']
@@ -12,7 +12,7 @@ module ShopifyCli
           shop = get_shop(org['stores'], id)
           write_env(app, shop)
           @ctx.puts "{{v}} Project now connected to {{green:#{app.first['title']}}}"
-          @ctx.puts "{{*}} Run {{cyan:shopify serve}} to start a local development server"
+          @ctx.puts "{{*}} Run {{command:#{ShopifyCli::TOOL_NAME} serve}} to start a local development server"
         end
       end
 

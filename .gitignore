@@ -8,3 +8,5 @@ heroku
 .vagrant/
 *.log
 docs/_site/
+tmp/
+.idea

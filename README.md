@@ -35,6 +35,7 @@ Developers should have some prior knowledge of the Shopify app ecosystem. Curren
 
 - If you don’t have one, [create a Shopify partner account](https://partners.shopify.com/signup).
 - If you don’t have one, [create a Development store](https://help.shopify.com/en/partners/dashboard/development-stores#create-a-development-store) where you can install and test your app.
+- You should have Node.js version 10.0.0 or higher installed. If you're looking for a way to manage your node versions we recommend [nvm](https://github.com/nvm-sh/nvm/blob/master/README.md)
 
 ## Commands
 
@@ -116,13 +117,13 @@ A [list of supported webhook events](https://help.shopify.com/en/api/reference/e
 
 Developers can use [development stores](https://help.shopify.com/en/partners/dashboard/development-stores) to test their apps. Development stores have no products, customers or orders when they’re created. Shopify App CLI can quickly add dummy data to your development store so you can test your app more thoroughly.
 
-The `populate` command can add fake products, customers, and draftorders. The default number of items added is 10. You can specify a different number of items with the `--count` option.
+The `populate` command can add fake products, customers, and draftorders. The default number of items added is 5. You can specify a different number of items with the `--count` option.
 
 ```sh
-# Adds 10 fake products
+# Adds 5 fake products
 $ shopify populate products
 
-# Adds 10 fake customers
+# Adds 5 fake customers
 $ shopify populate customers
 
 # Adds 25 fake orders
