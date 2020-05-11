@@ -48,19 +48,31 @@ module Extension
         ctx.abort(Content::Create::NO_APPS) if apps.empty?
 
         if !api_key.nil?
-          found_app = apps.find { |app| app.api_key == api_key }
-          ctx.abort(Content::Create::INVALID_API_KEY % api_key) if found_app.nil?
-          found_app
-        else
-          CLI::UI::Prompt.ask(Content::Create::ASK_APP) do |handler|
-            apps.each do |app|
-              handler.option("#{app.title} by #{app.business_name}") { app }
-            end
+          found_app = app_from_api_key(apps, api_key)
+
+          if found_app.nil?
+            ctx.puts(Content::Create::INVALID_API_KEY % api_key)
+          else
+            return found_app
           end
         end
+
+        ask_for_selection_from(apps)
       end
 
       private
+
+      def app_from_api_key(apps, api_key)
+        apps.find { |app| app.api_key == api_key }
+      end
+
+      def ask_for_selection_from(apps)
+        CLI::UI::Prompt.ask(Content::Create::ASK_APP) do |handler|
+          apps.each do |app|
+            handler.option("#{app.title} by #{app.business_name}") { app }
+          end
+        end
+      end
 
       def ask_with_reprompt(initial_value:, break_condition:, prompt_message:, reprompt_message:)
         value = initial_value

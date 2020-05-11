@@ -7,6 +7,7 @@ module Extension
     class CreateTest < MiniTest::Test
       include TestHelpers::FakeUI
       include ExtensionTestHelpers::TestExtensionSetup
+      include ExtensionTestHelpers::Content
 
       def setup
         super
@@ -95,20 +96,18 @@ module Extension
         assert_equal form.app, @app
       end
 
-      def test_prompts_the_user_to_choose_an_app_to_associate_with_extension_if_no_app_is_provided
+      def test_prompts_the_user_to_choose_an_app_to_associate_with_extension_if_no_api_key_is_provided
         CLI::UI::Prompt.expects(:ask).with(Content::Create::ASK_APP)
-
-        capture_io do
-          ask(api_key: nil)
-        end
+        capture_io { ask(api_key: nil) }
       end
 
-      def test_fails_with_invalid_api_key_to_associate_with_extension
+      def test_prompts_the_user_to_choose_an_app_if_invalid_key_given
+        CLI::UI::Prompt.expects(:ask).with(Content::Create::ASK_APP)
         api_key = '00001'
 
         io = capture_io { ask(api_key: api_key) }
 
-        assert_match(Content::Create::INVALID_API_KEY % api_key, io.join)
+        confirm_content_output(io: io, expected_content: Content::Create::INVALID_API_KEY % api_key)
       end
 
       private
