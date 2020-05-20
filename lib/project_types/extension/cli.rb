@@ -8,6 +8,10 @@ module Extension
     register_command('Extension::Commands::Register', "register")
     register_command('Extension::Commands::Push', "push")
     register_command('Extension::Commands::Serve', "serve")
+
+    require Project.project_filepath('messages/messages')
+    require Project.project_filepath('messages/message_loading')
+    register_messages(Extension::Messages::MessageLoading.load)
   end
 
   module Commands
@@ -41,7 +45,6 @@ module Extension
     end
   end
 
-  autoload :JsDeps, Project.project_filepath('js_deps')
   autoload :ExtensionProject, Project.project_filepath('extension_project')
-  autoload :Content, Project.project_filepath('content')
+  autoload :JsDeps, Project.project_filepath('js_deps')
 end

@@ -17,8 +17,8 @@ module Extension
 
           ShopifyCli::Core::Finalize.request_cd(form.directory_name)
 
-          @ctx.puts(Content::Create::READY_TO_START % form.name)
-          @ctx.puts(Content::Create::LEARN_MORE % form.type.name)
+          @ctx.puts(@ctx.message('create.ready_to_start', form.name))
+          @ctx.puts(@ctx.message('create.learn_more', form.type.name))
         end
       end
 

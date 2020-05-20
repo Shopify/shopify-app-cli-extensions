@@ -50,7 +50,7 @@ module Extension
     end
 
     def extension_type
-      Models::Type.load_type(config[EXTENSION_TYPE_KEY])
+      @extension_type ||= Models::Type.load_type(config[EXTENSION_TYPE_KEY])
     end
 
     def registration_id?
