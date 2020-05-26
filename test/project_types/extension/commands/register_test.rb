@@ -53,11 +53,11 @@ module Extension
           id: 55,
           type: @test_extension_type.identifier,
           title: @project.title,
+          location: 'https://partners.shopify.com/manage_extensions/55',
           draft_version: Models::Version.new(
             registration_id: 55,
             last_user_interaction_at: Time.now.utc,
           )
-
         )
         refute @project.registered?
 

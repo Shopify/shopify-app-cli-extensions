@@ -11,6 +11,7 @@ module Extension
       ID_FIELD = 'id'
       TYPE_FIELD = 'type'
       TITLE_FIELD = 'title'
+      LOCATION_FIELD = 'location'
       DRAFT_VERSION_FIELD = 'draftVersion'
       DRAFT_VERSION_REGISTRATION_ID_FIELD = %W(#{DRAFT_VERSION_FIELD} registrationId)
       DRAFT_VERSION_LAST_USER_INTERACTION_AT_FIELD = %W(#{DRAFT_VERSION_FIELD} lastUserInteractionAt)
@@ -46,6 +47,7 @@ module Extension
           id: registration_hash[ID_FIELD].to_i,
           type: registration_hash[TYPE_FIELD],
           title: registration_hash[TITLE_FIELD],
+          location: registration_hash[LOCATION_FIELD],
           draft_version: Models::Version.new(
             registration_id: registration_hash.dig(*DRAFT_VERSION_REGISTRATION_ID_FIELD).to_i,
             last_user_interaction_at: Time.parse(registration_hash.dig(*DRAFT_VERSION_LAST_USER_INTERACTION_AT_FIELD)),

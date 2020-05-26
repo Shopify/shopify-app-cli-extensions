@@ -21,6 +21,7 @@ module Extension
 
             @ctx.puts(Content::Register::SUCCESS % @project.title)
             @ctx.puts(Content::Register::SUCCESS_INFO)
+            @ctx.puts(registration.location)
           end
         end
       end

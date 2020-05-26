@@ -44,6 +44,7 @@ module Extension
         assert_kind_of Models::Registration, created_registration
         assert_equal @fake_type, created_registration.type
         assert_equal @fake_title, created_registration.title
+        assert_equal "https://partners.shopify.com/manage_extensions/#{created_registration.id}", created_registration.location
         assert_kind_of Time, created_registration.draft_version.last_user_interaction_at
       end
 

@@ -31,6 +31,7 @@ module Extension
                   id: registration_id,
                   type: type,
                   title: title,
+                  location: "https://partners.shopify.com/manage_extensions/#{registration_id}",
                   draftVersion: {
                     registrationId: registration_id,
                     lastUserInteractionAt: Time.now.utc.to_s
